@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -128,13 +129,17 @@ public class MainActivity extends AppCompatActivity {
             Log.e("Flag Quiz", "Error loading image: " + mCorrectCountry.getFileName(), e);
         }
 
-        // TODO: Shuffle the order of all the countries (use Collections.shuffle)
+        // Shuffle the order of all the countries (use Collections.shuffle)
+        Collections.shuffle(mAllCountriesList);
 
-        // TODO: Loop through all 4 buttons, enable them all and set them to the first 4 countries
-        // TODO: in the all countries list
+        // Loop through all 4 buttons, enable them all and set them to the first 4 countries
+        // in the all countries list
+        for (int i = 0; i < 4; i++)
+            mButtons[i].setText(mAllCountriesList.get(i).getName());
 
-
-        // TODO: After the loop, randomly replace one of the 4 buttons with the name of the correct country
+        // After the loop, randomly replace one of the 4 buttons with the name of the correct country
+        int randomPosition = rng.nextInt(4);
+        mButtons[randomPosition].setText(mCorrectCountry.getName());
 
     }
 
