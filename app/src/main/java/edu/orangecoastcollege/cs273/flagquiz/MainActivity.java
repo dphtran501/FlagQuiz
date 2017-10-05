@@ -130,16 +130,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Shuffle the order of all the countries (use Collections.shuffle)
-        Collections.shuffle(mAllCountriesList);
+        do
+        {
+            Collections.shuffle(mAllCountriesList);
+        } while(mAllCountriesList.subList(0, mButtons.length).contains(mCorrectCountry));
 
         // Loop through all 4 buttons, enable them all and set them to the first 4 countries
         // in the all countries list
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < mButtons.length; i++)
+        {
+            mButtons[i].setEnabled(true);
             mButtons[i].setText(mAllCountriesList.get(i).getName());
+        }
 
         // After the loop, randomly replace one of the 4 buttons with the name of the correct country
-        int randomPosition = rng.nextInt(4);
-        mButtons[randomPosition].setText(mCorrectCountry.getName());
+        mButtons[rng.nextInt(mButtons.length)].setText(mCorrectCountry.getName());
 
     }
 
