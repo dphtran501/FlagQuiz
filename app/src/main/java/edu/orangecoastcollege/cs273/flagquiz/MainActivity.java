@@ -75,14 +75,27 @@ public class MainActivity extends AppCompatActivity {
      */
     public void resetQuiz() {
 
-        // TODO: Reset the number of correct guesses made
-        // TODO: Reset the total number of guesses the user made
-        // TODO: Clear list of quiz countries (for prior games played)
+        // Reset the number of correct guesses made
+        mCorrectGuesses = 0;
+        // Reset the total number of guesses the user made
+        mTotalGuesses = 0;
+        // Clear list of quiz countries (for prior games played)
+        mQuizCountriesList.clear();
 
-        // TODO: Randomly add FLAGS_IN_QUIZ (10) countries from the mAllCountriesList into the mQuizCountriesList
-        // TODO: Ensure no duplicate countries (e.g. don't add a country if it's already in mQuizCountriesList)
+        // Randomly add FLAGS_IN_QUIZ (10) countries from the mAllCountriesList into the mQuizCountriesList
+        // Ensure no duplicate countries (e.g. don't add a country if it's already in mQuizCountriesList)
+        int i = 0;
+        while (i < FLAGS_IN_QUIZ)
+        {
+            int randomPosition = rng.nextInt(mAllCountriesList.size());
+            Country randomCountry = mAllCountriesList.get(randomPosition);
+            if (!mQuizCountriesList.contains(randomCountry))
+                mQuizCountriesList.add(randomCountry);
+            else i++;
+        }
 
-        // TODO: Start the quiz by calling loadNextFlag
+        // Start the quiz by calling loadNextFlag
+        loadNextFlag();
     }
 
     /**
