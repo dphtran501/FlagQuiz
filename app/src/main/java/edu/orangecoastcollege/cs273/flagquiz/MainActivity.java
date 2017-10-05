@@ -1,6 +1,7 @@
 package edu.orangecoastcollege.cs273.flagquiz;
 
 import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,16 +86,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Randomly add FLAGS_IN_QUIZ (10) countries from the mAllCountriesList into the mQuizCountriesList
         // Ensure no duplicate countries (e.g. don't add a country if it's already in mQuizCountriesList)
-        int i = 0;
-        while (i < FLAGS_IN_QUIZ)
+        while (mQuizCountriesList.size() < FLAGS_IN_QUIZ)
         {
             int randomPosition = rng.nextInt(mAllCountriesList.size());
             Country randomCountry = mAllCountriesList.get(randomPosition);
             if (!mQuizCountriesList.contains(randomCountry))
-            {
                 mQuizCountriesList.add(randomCountry);
-                i++;
-            }
         }
 
         // Start the quiz by calling loadNextFlag
@@ -106,17 +104,29 @@ public class MainActivity extends AppCompatActivity {
      */
     private void loadNextFlag() {
         // Initialize the mCorrectCountry by removing the item at position 0 in the mQuizCountries
-        // TODO: Clear the mAnswerTextView so that it doesn't show text from the previous question
-        // TODO: Display current question number in the mQuestionNumberTextView
+        mCorrectCountry = mQuizCountriesList.remove(0);
+        // Clear the mAnswerTextView so that it doesn't show text from the previous question
+        mAnswerTextView.setText("");
+        // Display current question number in the mQuestionNumberTextView
+        int questionNumber = FLAGS_IN_QUIZ - mQuizCountriesList.size();
+        mQuestionNumberTextView.setText(getString(R.string.question, questionNumber, FLAGS_IN_QUIZ));
 
-
-        // TODO: Use AssetManager to load next image from assets folder
+        // Use AssetManager to load next image from assets folder
         AssetManager am = getAssets();
 
-        // TODO: Get an InputStream to the asset representing the next flag
-        // TODO: and try to use the InputStream to create a Drawable
-        // TODO: The file name can be retrieved from the correct country's file name.
-        // TODO: Set the image drawable to the correct flag.
+        // Get an InputStream to the asset representing the next flag
+        // and try to use the InputStream to create a Drawable
+        try
+        {
+            // The file name can be retrieved from the correct country's file name.
+            InputStream stream = am.open(mCorrectCountry.getFileName());
+            Drawable image = Drawable.createFromStream(stream, mCorrectCountry.getName());
+            // Set the image drawable to the correct flag.
+            mFlagImageView.setImageDrawable(image);
+        } catch (IOException e)
+        {
+            Log.e("Flag Quiz", "Error loading image: " + mCorrectCountry.getFileName(), e);
+        }
 
         // TODO: Shuffle the order of all the countries (use Collections.shuffle)
 
