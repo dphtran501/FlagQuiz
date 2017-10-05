@@ -90,8 +90,10 @@ public class MainActivity extends AppCompatActivity {
             int randomPosition = rng.nextInt(mAllCountriesList.size());
             Country randomCountry = mAllCountriesList.get(randomPosition);
             if (!mQuizCountriesList.contains(randomCountry))
+            {
                 mQuizCountriesList.add(randomCountry);
-            else i++;
+                i++;
+            }
         }
 
         // Start the quiz by calling loadNextFlag
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
      * the flag's image and then 4 buttons, one of which contains the correct answer.
      */
     private void loadNextFlag() {
-        // TODO: Initialize the mCorrectCountry by removing the item at position 0 in the mQuizCountries
+        // Initialize the mCorrectCountry by removing the item at position 0 in the mQuizCountries
         // TODO: Clear the mAnswerTextView so that it doesn't show text from the previous question
         // TODO: Display current question number in the mQuestionNumberTextView
 
