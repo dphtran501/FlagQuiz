@@ -4,11 +4,13 @@ import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +43,30 @@ public class MainActivity extends AppCompatActivity {
         rng = new SecureRandom();
         handler = new Handler();
 
-        // TODO: Get references to GUI components (textviews and imageview)
-        // TODO: Put all 4 buttons in the array (mButtons)
-        // TODO: Set mQuestionNumberTextView's text to the appropriate strings.xml resource
-        // TODO: Load all the countries from the JSON file using the JSONLoader
-        // TODO: Call the method resetQuiz() to start the quiz.
+        // Get references to GUI components (textviews and imageview)
+        mQuestionNumberTextView = (TextView) findViewById(R.id.questionNumberTextView);
+        mFlagImageView = (ImageView) findViewById(R.id.flagImageView);
+        mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
+
+        // Put all 4 buttons in the array (mButtons)
+        mButtons[0] = (Button) findViewById(R.id.button);
+        mButtons[1] = (Button) findViewById(R.id.button2);
+        mButtons[2] = (Button) findViewById(R.id.button3);
+        mButtons[3] = (Button) findViewById(R.id.button4);
+
+        // Set mQuestionNumberTextView's text to the appropriate strings.xml resource
+        mQuestionNumberTextView.setText(getString(R.string.question, 1, FLAGS_IN_QUIZ));
+
+        // Load all the countries from the JSON file using the JSONLoader
+        try
+        {
+            mAllCountriesList = JSONLoader.loadJSONFromAsset(this);
+        } catch (IOException e)
+        {
+            Log.e("Flag Quiz", "Error loading from JSON", e);
+        }
+        // Call the method resetQuiz() to start the quiz.
+        resetQuiz();
 
     }
 
