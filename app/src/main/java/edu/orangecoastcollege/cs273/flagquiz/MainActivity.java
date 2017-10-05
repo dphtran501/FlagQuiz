@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
         // and disable just the incorrect button.
         else
         {
+            clickedButton.setEnabled(false);
             mAnswerTextView.setText(getString(R.string.incorrect_answer));
             mAnswerTextView.setTextColor(ContextCompat.getColor(this, R.color.incorrect_answer));
         }
