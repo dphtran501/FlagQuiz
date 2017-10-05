@@ -46,22 +46,24 @@
         android:id="@+id/row1LinearLayout">
 
         <Button
+            android:id="@+id/button"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button"
             android:layout_weight="1"
             android:lines="2"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:onClick="makeGuess"
+            android:text="New Button"/>
 
         <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button2"
             android:layout_weight="1"
             android:lines="2"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:onClick="makeGuess"
+            android:text="New Button"/>
     </LinearLayout>
 
     <LinearLayout
@@ -71,22 +73,24 @@
         android:id="@+id/row2LinearLayout">
 
         <Button
+            android:id="@+id/button3"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button3"
             android:layout_weight="1"
             android:lines="2"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:onClick="makeGuess"
+            android:text="New Button"/>
 
         <Button
+            android:id="@+id/button4"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="New Button"
-            android:id="@+id/button4"
             android:layout_weight="1"
             android:lines="2"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            android:onClick="makeGuess"
+            android:text="New Button"/>
     </LinearLayout>
 
 

@@ -1,9 +1,12 @@
 package edu.orangecoastcollege.cs273.flagquiz;
 
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             mAllCountriesList = JSONLoader.loadJSONFromAsset(this);
         } catch (IOException e)
         {
-            Log.e("Flag Quiz", "Error loading from JSON", e);
+            Log.e(TAG, "Error loading from JSON", e);
         }
         // Call the method resetQuiz() to start the quiz.
         resetQuiz();
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             mFlagImageView.setImageDrawable(image);
         } catch (IOException e)
         {
-            Log.e("Flag Quiz", "Error loading image: " + mCorrectCountry.getFileName(), e);
+            Log.e(TAG, "Error loading image: " + mCorrectCountry.getFileName(), e);
         }
 
         // Shuffle the order of all the countries (use Collections.shuffle)
@@ -156,18 +159,60 @@ public class MainActivity extends AppCompatActivity {
      * @param v
      */
     public void makeGuess(View v) {
-        // TODO: Downcast the View v into a Button (since it's one of the 4 buttons)
-        // TODO: Get the country's name from the text of the button
+        // Downcast the View v into a Button (since it's one of the 4 buttons)
+        Button clickedButton = (Button) v;
+        // Get the country's name from the text of the button
+        String guess = clickedButton.getText().toString();
 
-        // TODO: If the guess matches the correct country's name, increment the number of correct guesses,
-        // TODO: then display correct answer in green text.  Also, disable all 4 buttons (can't keep guessing once it's correct)
-        // TODO: Nested in this decision, if the user has completed all 10 questions, show an AlertDialog
-        // TODO: with the statistics and an option to Reset Quiz
+        mTotalGuesses++;
+        // If the guess matches the correct country's name, increment the number of correct guesses,
+        // then display correct answer in green text.  Also, disable all 4 buttons (can't keep guessing once it's correct)
+        if (guess == mCorrectCountry.getName())
+        {
+            // Disable all buttons (don't let user guess again)
+            for (Button b: mButtons)
+                b.setEnabled(false);
+            mCorrectGuesses++;
+            mAnswerTextView.setText(mCorrectCountry.getName());
+            mAnswerTextView.setTextColor(ContextCompat.getColor(this, R.color.correct_answer));
 
-        // TODO: Else, the answer is incorrect, so display "Incorrect Guess!" in red
-        // TODO: and disable just the incorrect button.
-
-
+            // Nested in this decision, if the user has completed all 10 questions, show an AlertDialog
+            // with the statistics and an option to Reset Quiz
+            if (mCorrectGuesses < FLAGS_IN_QUIZ)
+            {
+                // Wait two seconds, then load next flag
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run()
+                    {
+                        loadNextFlag();
+                    }
+                }, 2000);
+            }
+            else
+            {
+                // Show an AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getString(R.string.results, mTotalGuesses, (double) mCorrectGuesses / mTotalGuesses));
+                builder.setPositiveButton(getString(R.string.reset_quiz), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        resetQuiz();
+                    }
+                });
+                builder.setCancelable(false);
+                builder.create();
+                builder.show();
+            }
+        }
+        // Else, the answer is incorrect, so display "Incorrect Guess!" in red
+        // and disable just the incorrect button.
+        else
+        {
+            mAnswerTextView.setText(getString(R.string.incorrect_answer));
+            mAnswerTextView.setTextColor(ContextCompat.getColor(this, R.color.incorrect_answer));
+        }
 
     }
 
