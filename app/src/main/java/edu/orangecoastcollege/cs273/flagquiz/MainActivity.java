@@ -21,7 +21,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Runs an application that quizzes the user on countries' flags. An image of a flag is displayed to
+ * the screen, as well as four buttons each with the name of a country labeled on them. The user has
+ * to guess which button has the country that corresponds to the flag displayed. In the end, the
+ * user will be shown a percentage indicating how well they did on the quiz.
+ *
+ * @author Derek Tran
+ * @version 1.0
+ * @since October 5, 2017
+ */
+public class MainActivity extends AppCompatActivity
+{
 
     private static final String TAG = "Flag Quiz";
 
@@ -40,8 +51,16 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mFlagImageView; // displays a flag
     private TextView mAnswerTextView; // displays correct answer
 
+    /**
+     * Initializes <code>MainActivity</code> by inflating its UI.
+     *
+     * @param savedInstanceState Bundle containing the data it recently supplied in
+     *                           onSaveInstanceState(Bundle) if activity was reinitialized after
+     *                           being previously shut down. Otherwise it is null.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -79,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sets up and starts a new quiz.
      */
-    public void resetQuiz() {
+    public void resetQuiz()
+    {
 
         // Reset the number of correct guesses made
         mCorrectGuesses = 0;
@@ -94,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
         {
             int randomPosition = rng.nextInt(mAllCountriesList.size());
             Country randomCountry = mAllCountriesList.get(randomPosition);
-            if (!mQuizCountriesList.contains(randomCountry))
-                mQuizCountriesList.add(randomCountry);
+            if (!mQuizCountriesList.contains(randomCountry)) mQuizCountriesList.add(randomCountry);
         }
 
         // Start the quiz by calling loadNextFlag
@@ -106,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
      * Method initiates the process of loading the next flag for the quiz, showing
      * the flag's image and then 4 buttons, one of which contains the correct answer.
      */
-    private void loadNextFlag() {
+    private void loadNextFlag()
+    {
         // Initialize the mCorrectCountry by removing the item at position 0 in the mQuizCountries
         mCorrectCountry = mQuizCountriesList.remove(0);
         // Clear the mAnswerTextView so that it doesn't show text from the previous question
@@ -136,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         do
         {
             Collections.shuffle(mAllCountriesList);
-        } while(mAllCountriesList.subList(0, mButtons.length).contains(mCorrectCountry));
+        } while (mAllCountriesList.subList(0, mButtons.length).contains(mCorrectCountry));
 
         // Loop through all 4 buttons, enable them all and set them to the first 4 countries
         // in the all countries list
@@ -156,9 +176,11 @@ public class MainActivity extends AppCompatActivity {
      * to match the flag image displayed.  If the guess is correct, the country's name (in GREEN) will be shown,
      * followed by a slight delay of 2 seconds, then the next flag will be loaded.  Otherwise, the
      * word "Incorrect Guess" will be shown in RED and the button will be disabled.
+     *
      * @param v
      */
-    public void makeGuess(View v) {
+    public void makeGuess(View v)
+    {
         // Downcast the View v into a Button (since it's one of the 4 buttons)
         Button clickedButton = (Button) v;
         // Get the country's name from the text of the button
@@ -170,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         if (guess == mCorrectCountry.getName())
         {
             // Disable all buttons (don't let user guess again)
-            for (Button b: mButtons)
+            for (Button b : mButtons)
                 b.setEnabled(false);
             mCorrectGuesses++;
             mAnswerTextView.setText(mCorrectCountry.getName());
@@ -181,20 +203,21 @@ public class MainActivity extends AppCompatActivity {
             if (mCorrectGuesses < FLAGS_IN_QUIZ)
             {
                 // Wait two seconds, then load next flag
-                handler.postDelayed(new Runnable() {
+                handler.postDelayed(new Runnable()
+                {
                     @Override
                     public void run()
                     {
                         loadNextFlag();
                     }
                 }, 2000);
-            }
-            else
+            } else
             {
                 // Show an AlertDialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.results, mTotalGuesses, (double) mCorrectGuesses / mTotalGuesses * 100.0));
-                builder.setPositiveButton(getString(R.string.reset_quiz), new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.reset_quiz), new DialogInterface.OnClickListener()
+                {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
