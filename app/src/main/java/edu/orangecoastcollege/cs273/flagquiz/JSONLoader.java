@@ -15,8 +15,13 @@ import java.util.List;
 /**
  * Class loads Country data from a formatted JSON (JavaScript Object Notation) file.
  * Populates data model (Country) with data.
+ *
+ * @author Derek Tran
+ * @version 1.0
+ * @since October 5, 2017
  */
-public class JSONLoader {
+public class JSONLoader
+{
 
     /**
      * Loads JSON data from a file in the assets directory.
@@ -24,7 +29,8 @@ public class JSONLoader {
      * @param context The activity from which the data is loaded.
      * @throws IOException If there is an error reading from the JSON file.
      */
-    public static List<Country> loadJSONFromAsset(Context context) throws IOException {
+    public static List<Country> loadJSONFromAsset(Context context) throws IOException
+    {
         List<Country> allCountriesList = new ArrayList<>();
         String json = null;
         InputStream is = context.getAssets().open("Countries.json");
@@ -34,7 +40,8 @@ public class JSONLoader {
         is.close();
         json = new String(buffer, "UTF-8");
 
-        try {
+        try
+        {
             JSONObject jsonRootObject = new JSONObject(json);
             JSONArray allCountriesJSON = jsonRootObject.getJSONArray("Countries");
 
@@ -46,7 +53,8 @@ public class JSONLoader {
                 allCountriesList.add(country);
             }
 
-        } catch (JSONException e) {
+        } catch (JSONException e)
+        {
             Log.e("Flag Quiz", e.getMessage());
         }
 

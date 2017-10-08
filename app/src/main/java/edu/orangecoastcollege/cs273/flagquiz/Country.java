@@ -7,7 +7,8 @@ package edu.orangecoastcollege.cs273.flagquiz;
  * @author Michael Paulding
  * @version 1.0
  */
-public class Country {
+public class Country
+{
 
     private String mName;
     private String mRegion;
@@ -15,11 +16,13 @@ public class Country {
 
     /**
      * Instantiates a new <code>Country</code> given its name and region.
-     * @param name The name of the <code>Country</code>
+     *
+     * @param name   The name of the <code>Country</code>
      * @param region The region (Africa, Asia, Europe, North America, Oceania, or South America
      *               of the <code>Country</code>
      */
-    public Country(String name, String region) {
+    public Country(String name, String region)
+    {
         mName = name;
         mRegion = region;
         name = name.replaceAll(" ", "_");
@@ -29,36 +32,44 @@ public class Country {
 
     /**
      * Gets the name of the <code>Country</code>.
+     *
      * @return The name of the <code>Country</code>
      */
-    public String getName() {
+    public String getName()
+    {
         return mName;
     }
 
     /**
      * Gets the region of the <code>Country</code>.
+     *
      * @return The region of the <code>Country</code>
      */
-    public String getRegion() {
+    public String getRegion()
+    {
         return mRegion;
     }
 
     /**
      * Gets the file name of the <code>Country</code> with its path. For example:
      * Africa/Africa-Algeria.png
+     *
      * @return The file name of the <code>Country</code>
      */
-    public String getFileName() {
+    public String getFileName()
+    {
         return mFileName;
     }
 
     /**
      * Compares two Countries for equality based on name, region and file name.
+     *
      * @param o The other country.
      * @return True if the countries are the same, false otherwise.
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -72,10 +83,12 @@ public class Country {
 
     /**
      * Generates an integer based hash code to uniquely represent this <code>Country</code>.
+     *
      * @return An integer based hash code to represent this <code>Country</code>.
      */
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int result = mName.hashCode();
         result = 31 * result + mRegion.hashCode();
         result = 31 * result + mFileName.hashCode();
@@ -84,14 +97,12 @@ public class Country {
 
     /**
      * Generates a text based representation of this <code>Country</code>.
+     *
      * @return A text based representation of this <code>Country</code>.
      */
     @Override
-    public String toString() {
-        return "Country{" +
-                "Name='" + mName + '\'' +
-                ", Region='" + mRegion + '\'' +
-                ", FileName='" + mFileName + '\'' +
-                '}';
+    public String toString()
+    {
+        return "Country{" + "Name='" + mName + '\'' + ", Region='" + mRegion + '\'' + ", FileName='" + mFileName + '\'' + '}';
     }
 }
