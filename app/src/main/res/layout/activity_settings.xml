@@ -20,9 +20,5 @@
             </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
-    </android.support.v4.widget.NestedScrollView>
+    <include layout="@layout/content_settings"/>
 </android.support.design.widget.CoordinatorLayout>
