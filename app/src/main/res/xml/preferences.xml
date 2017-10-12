@@ -11,7 +11,7 @@
         android:defaultValue="4" />
 
     <ListPreference
-        android:entries="@array/regions_list_for_settings"
+        android:entries="@array/regions_list"
         android:entryValues="@array/regions_list"
         android:key="pref_regions"
         android:title="@string/world_regions"
