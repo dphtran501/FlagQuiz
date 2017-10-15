@@ -30,7 +30,7 @@ public class SettingsActivity extends AppCompatActivity
 
         // Enable home button (not enabled by default)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // use our fragment to fill out the content
+        // use our fragment to fill out the content (replaces existing fragment)
         getFragmentManager()
                 .beginTransaction()
                 .replace(android.R.id.content, new SettingsActivityFragment())
