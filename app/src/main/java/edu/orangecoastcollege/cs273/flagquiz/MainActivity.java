@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             Log.e(TAG, "Error loading from JSON", e);
         }
 
+        // Updates quiz based on preferences selected
         mRegion = preferences.getString(REGIONS, "All");
         mChoices = Integer.parseInt(preferences.getString(CHOICES, "4"));
         updateChoices();
