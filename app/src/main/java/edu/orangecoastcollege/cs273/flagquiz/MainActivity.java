@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         mFlagImageView = (ImageView) findViewById(R.id.flagImageView);
         mAnswerTextView = (TextView) findViewById(R.id.answerTextView);
 
-        // Put all 4 buttons in the array (mButtons)
+        // Put all 8 buttons in the array (mButtons)
         mButtons[0] = (Button) findViewById(R.id.button);
         mButtons[1] = (Button) findViewById(R.id.button2);
         mButtons[2] = (Button) findViewById(R.id.button3);
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity
         mButtons[6] = (Button) findViewById(R.id.button7);
         mButtons[7] = (Button) findViewById(R.id.button8);
 
+        // Put all 4 button layouts in the array (mLayouts)
         mLayouts[0] = (LinearLayout) findViewById(R.id.row1LinearLayout);
         mLayouts[1] = (LinearLayout) findViewById(R.id.row2LinearLayout);
         mLayouts[2] = (LinearLayout) findViewById(R.id.row3LinearLayout);
@@ -207,12 +208,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Handles the click event of one of the 4 buttons indicating the guess of a country's name
+     * Handles the click event of one of the 2-8 buttons indicating the guess of a country's name
      * to match the flag image displayed.  If the guess is correct, the country's name (in GREEN) will be shown,
      * followed by a slight delay of 2 seconds, then the next flag will be loaded.  Otherwise, the
      * word "Incorrect Guess" will be shown in RED and the button will be disabled.
      *
-     * @param v
+     * @param v The view that called this method.
      */
     public void makeGuess(View v)
     {
@@ -276,6 +277,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Inflates the Settings menu within MainActivity
+
+    /**
+     * Initializes the contents of this activity's standard options menu.
+     *
+     * @param menu The options menu in which you place your items.
+     * @return You must return true for the menu to be displayed; if you return false it will not be
+     * shown.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -284,6 +293,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     // Responds to the user clicking the Settings menu item icon
+
+    /**
+     * Called whenever an item in your options menu is selected.
+     *
+     * @param item The menu item selected.
+     * @return Return false to allow normal menu processing to proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -300,7 +316,7 @@ public class MainActivity extends AppCompatActivity
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
         {
             // Let's find out what key changed
-            switch(key)
+            switch (key)
             {
                 case CHOICES:
                     // Read the number of choices from shared preferences
@@ -332,8 +348,7 @@ public class MainActivity extends AppCompatActivity
             {
                 mLayouts[i].setEnabled(true);
                 mLayouts[i].setVisibility(View.VISIBLE);
-            }
-            else
+            } else
             {
                 mLayouts[i].setEnabled(false);
                 mLayouts[i].setVisibility(View.GONE);
@@ -345,15 +360,13 @@ public class MainActivity extends AppCompatActivity
     {
         // Make a decision:
         // If the region is "All", filtered list is the same as all
-        if (mRegion.equals("All"))
-            mFilteredCountriesList = new ArrayList<>(mAllCountriesList);
+        if (mRegion.equals("All")) mFilteredCountriesList = new ArrayList<>(mAllCountriesList);
         else
         {
             mFilteredCountriesList = new ArrayList<>();
             // loop through all countries
             for (Country c : mAllCountriesList)
-                if (c.getRegion().equals(mRegion))
-                    mFilteredCountriesList.add(c);
+                if (c.getRegion().equals(mRegion)) mFilteredCountriesList.add(c);
         }
     }
 }
